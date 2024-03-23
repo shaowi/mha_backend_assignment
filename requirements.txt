@@ -1,2 +1,3 @@
 flask
 dataclasses-json
+pytest
