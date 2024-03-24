@@ -8,6 +8,9 @@ from utils.globals import (
     USER_DELETED_SUCCESSFULLY,
 )
 from model.user import User
+from service.user_processing_service import UserProcessingService
+
+user_processor = UserProcessingService()
 
 
 def get_user_by_id(user_id, users: list[User]):
@@ -30,6 +33,7 @@ def handle_get_user(user_id, users):
 
 
 def handle_add_user(data, users: list[User]):
+    # Check if the required fields are present in the data
     required_fields = ["name", "age"]
     missing_required_fields = [field for field in required_fields if field not in data]
     if missing_required_fields:
@@ -46,6 +50,12 @@ def handle_add_user(data, users: list[User]):
     data["id"] = str(uuid.uuid4())
     user: User = User.from_dict(data)
     users.append(user)
+
+    # Process the user's age category
+    logging.info(f"Processing user: {user}\n")
+    user_processor.process_user_age(user)
+    logging.info(f"Age categories:\n{user_processor.get_user_age_categories_str()}\n")
+
     logging.info(f"Added user: {data}\n")
     logging.info(f"Current users: {','.join([user.name for user in users])}\n")
     return USER_ADDED_SUCCESSFULLY, 201
