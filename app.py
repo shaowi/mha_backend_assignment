@@ -1,3 +1,4 @@
+import json
 import logging
 from flask import Flask, request
 
@@ -11,10 +12,18 @@ from utils.handler import (
 from model.user import User
 
 app = Flask(__name__)
-users = [
-    User(id="1", name="Alice", age=30),
-    User(id="2", name="Bob", age=35),
-]
+
+# Global variable to store user data
+users = []
+
+# Load up JSON data
+json_file_path = "data.json"
+
+with open(json_file_path, "r") as file:
+    data = json.load(file)
+
+    # Update User objects with the data
+    users = [User.from_dict(user) for user in data]
 
 # Logging configuration
 logging.basicConfig(filename="backend.log", level=logging.INFO, filemode="w")
@@ -46,4 +55,6 @@ def delete_user(user_id):
 
 
 if __name__ == "__main__":
+
+    # Start the Flask app
     app.run(debug=True, port=3000)
