@@ -2,7 +2,7 @@ import logging
 import uuid
 
 from flask import jsonify
-from globals import (
+from utils.globals import (
     ERROR_USER_NOT_FOUND,
     USER_ADDED_SUCCESSFULLY,
     USER_DELETED_SUCCESSFULLY,

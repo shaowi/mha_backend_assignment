@@ -2,7 +2,7 @@ import pytest
 from flask import json
 
 import app
-from globals import USER_ADDED_SUCCESSFULLY
+from utils.globals import USER_ADDED_SUCCESSFULLY, USER_DELETED_SUCCESSFULLY
 
 ENDPOINT = "http://localhost:3000/user"
 
@@ -35,11 +35,11 @@ def test_add_user_return_correct_message(client):
     )
     assert response.status_code == 201
     data = json.loads(response.data)
-    assert data["message"] == USER_ADDED_SUCCESSFULLY
+    assert data == USER_ADDED_SUCCESSFULLY
 
 
 def test_delete_user_return_correct_message(client):
     response = client.delete(f"{ENDPOINT}/1")
     assert response.status_code == 200
     data = json.loads(response.data)
-    assert data["message"] == USER_ADDED_SUCCESSFULLY
+    assert data == USER_DELETED_SUCCESSFULLY

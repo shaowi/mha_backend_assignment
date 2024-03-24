@@ -1,8 +1,8 @@
 import logging
 from flask import Flask, request
 
-from globals import USER_ENDPOINT, USER_ENDPOINT_WITH_ID
-from handler import (
+from utils.globals import USER_ENDPOINT, USER_ENDPOINT_WITH_ID
+from utils.handler import (
     handle_add_user,
     handle_delete_user,
     handle_get_all_users,
